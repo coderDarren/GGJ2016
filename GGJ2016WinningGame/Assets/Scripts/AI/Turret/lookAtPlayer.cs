@@ -19,12 +19,18 @@ public class lookAtPlayer : MonoBehaviour {
 		}
 	}
 
-	void OnTriggerEnter(Collider coll)
+	void OnTriggerStay(Collider coll)
 	{
-
 		if (coll.tag == "Player");
 		{
-			playerSighted = true;
+			if (player.GetComponent<PlayerController>().crouch)
+			{
+				
+			}
+			else
+			{
+				playerSighted = true;	
+			}				
 		}
 	}
 }

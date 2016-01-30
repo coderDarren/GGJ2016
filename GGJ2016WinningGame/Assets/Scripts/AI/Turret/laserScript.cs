@@ -4,7 +4,7 @@ using System.Collections;
 public class laserScript : MonoBehaviour {
 
 	LineRenderer laser;
-	public bool shouldIFire = false;
+	public bool laserOn = false;
 	public float laserTexRot = 2;
 	Renderer laserTex;
 	Light laserLight;
@@ -21,7 +21,7 @@ public class laserScript : MonoBehaviour {
 
 	void Update () 
 	{
-		if (shouldIFire)
+		if (laserOn)
 		{
 			StopCoroutine("FireLaser");
 			StartCoroutine("FireLaser");
@@ -34,7 +34,7 @@ public class laserScript : MonoBehaviour {
 		laserTex.enabled = true;
 		laserLight.enabled = true;
 
-		while (shouldIFire = true)
+		while (laserOn = true)
 		{
 			laser.material.mainTextureOffset = new Vector2(0, Time.time * laserTexRot);
 			Ray ray = new Ray(transform.position, transform.forward);
@@ -52,7 +52,7 @@ public class laserScript : MonoBehaviour {
 			yield return null;
 		}
 
-		shouldIFire = false;
+		laserOn = false;
 		laser.enabled = false;
 		laserTex.enabled = false;
 	}
