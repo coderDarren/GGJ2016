@@ -60,10 +60,11 @@ public class StandardCamera : MonoBehaviour
 
     CollisionHandler collision;
     Vector3 targetPos = Vector3.zero;
-    Vector3 destination = Vector3.zero;
+    public Vector3 destination = Vector3.zero;
     Vector3 adjustedDestination = Vector3.zero; 
     Vector3 camVel = Vector3.zero; 
     float zoomInput, mouseOrbitInput;
+    PlayerController controller;
 
     bool editingSettings = false;
 
@@ -77,6 +78,7 @@ public class StandardCamera : MonoBehaviour
 
         if (target)
         {
+            controller = target.GetComponent<PlayerController>();
             MoveToTarget();
 
             collision.Initialize(Camera.main);
@@ -111,8 +113,8 @@ public class StandardCamera : MonoBehaviour
     void Update()
     {
         GetInput();
-        if (!editingSettings)
-            ZoomInOnTarget();
+        //if (!editingSettings)
+            //ZoomInOnTarget();
         DrawDebugLines();
     }
 
@@ -122,6 +124,7 @@ public class StandardCamera : MonoBehaviour
         MoveToTarget();
         //rotating
         LookAtTarget();
+       
         //player input orbit
         if (!editingSettings)
         {
@@ -138,9 +141,12 @@ public class StandardCamera : MonoBehaviour
 
     void MoveToTarget()
     {
-        targetPos = target.position + Vector3.up * position.targetPosOffset.y + 
-                                      transform.TransformDirection(Vector3.forward * position.targetPosOffset.z) + 
-                                      transform.TransformDirection(Vector3.right * position.targetPosOffset.x); //NEW
+        
+        targetPos = target.position + Vector3.up * position.targetPosOffset.y +
+                                        transform.TransformDirection(Vector3.forward * position.targetPosOffset.z) +
+                                        transform.TransformDirection(Vector3.right * position.targetPosOffset.x); //NEW
+
+
         if (orbit.rotateWithTarget)
             destination = Quaternion.Euler(orbit.xRotation, orbit.yRotation + target.eulerAngles.y, 0) * -Vector3.forward * position.distanceFromTarget;
         else
@@ -174,11 +180,16 @@ public class StandardCamera : MonoBehaviour
             else
                 transform.position = destination;
         }
+        
+
+        
+        
     }
 
+    Quaternion targetRotation;
     void LookAtTarget()
     {
-        Quaternion targetRotation = Quaternion.LookRotation(targetPos - transform.position);
+        targetRotation = Quaternion.LookRotation(targetPos - transform.position);
         transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, 100 * Time.deltaTime);
     }
 

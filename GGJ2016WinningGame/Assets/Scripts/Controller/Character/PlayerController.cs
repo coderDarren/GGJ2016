@@ -40,7 +40,12 @@ public class PlayerController : MonoBehaviour {
     Quaternion targetRotation;
     Rigidbody rBody;
     public float forwardInput, turnInput, jumpInput;
-    public bool firstPersonMode = false; //Set to true when using FPSCamera
+    public bool thirdPersonShooter = false; //Set to true when using FPSCamera
+    public bool crouch = false, walk = false;
+    public bool grounded;
+    StandardCamera standardCam;
+    FPSCamera fpsCam;
+    float modifiedSpeed = 1;
 
     public Quaternion TargetRotation
     {
@@ -63,26 +68,51 @@ public class PlayerController : MonoBehaviour {
             Debug.LogError("The character needs a rigidbody.");
 
         forwardInput = turnInput = jumpInput = 0;
+        standardCam = Camera.main.GetComponent<StandardCamera>();
+        fpsCam = Camera.main.GetComponent<FPSCamera>();
+        fpsCam.enabled = false;
     }
 
     void GetInput()
     {
         forwardInput = Input.GetAxis(inputSetting.FORWARD_AXIS); //interpolated
+        if (forwardInput < -0.5f)
+            forwardInput = -0.5f;
         turnInput = Input.GetAxis(inputSetting.TURN_AXIS); //interpolated
         jumpInput = Input.GetAxisRaw(inputSetting.JUMP_AXIS); //non-interpolated
+        if (Input.GetKeyDown(KeyCode.LeftControl) && !walk)
+        {
+            crouch = !crouch;
+        }
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            thirdPersonShooter = !thirdPersonShooter;
+            SwitchCameras();
+        }
+        if (Input.GetKeyDown(KeyCode.LeftShift) && !crouch)
+        {
+            walk = !walk;
+        }
     }
 
     void Update()
     {
         GetInput();
+        if (crouch)
+            modifiedSpeed = Mathf.Lerp(modifiedSpeed, 0.4f, 4 * Time.deltaTime);
+        if (walk)
+            modifiedSpeed = Mathf.Lerp(modifiedSpeed, 0.3f, 4 * Time.deltaTime);
+        if (!crouch && !walk)
+            modifiedSpeed = Mathf.Lerp(modifiedSpeed, 1, 4 * Time.deltaTime);
     }
 
     void FixedUpdate()
     {
+        grounded = Grounded();
 
         Run();
 
-        if (!firstPersonMode)
+        if (!thirdPersonShooter)
         {
             Turn();
             velocity.x = 0; //cant be strafing
@@ -103,7 +133,7 @@ public class PlayerController : MonoBehaviour {
         if (Mathf.Abs(forwardInput) > inputSetting.inputDelay)
         {
             //move
-            velocity.z = moveSetting.forwardVel * forwardInput;
+            velocity.z = moveSetting.forwardVel * forwardInput * modifiedSpeed;
         }
         else
             //zero velocity
@@ -115,7 +145,7 @@ public class PlayerController : MonoBehaviour {
         if (Mathf.Abs(turnInput) > inputSetting.inputDelay)
         {
             //move
-            velocity.x = moveSetting.forwardVel * turnInput;
+            velocity.x = moveSetting.forwardVel * turnInput * modifiedSpeed;
         }
         else
             //zero velocity
@@ -133,12 +163,13 @@ public class PlayerController : MonoBehaviour {
 
     void Jump()
     {
-        if (jumpInput > 0 && Grounded())
+        if (jumpInput > 0 && grounded)
         {
             //jump
-            velocity.y = moveSetting.jumpVel;
+            if (forwardInput > 0 && !crouch)
+                velocity.y = moveSetting.jumpVel;
         }
-        else if (jumpInput == 0 && Grounded())
+        else if (jumpInput == 0 && grounded)
         {
             //zero out our velocity.y
             velocity.y = 0;
@@ -164,8 +195,28 @@ public class PlayerController : MonoBehaviour {
         }catch(System.Exception) {}
     }
 
+    void SwitchCameras()
+    {
+        if (thirdPersonShooter)
+        {
+            fpsCam.enabled = true;
+            standardCam.enabled = false;
+            fpsCam.rotation.x = standardCam.orbit.xRotation*-1;
+            fpsCam.rotation.y = standardCam.orbit.yRotation+180;
+            Cursor.visible = false;
+        }
+        else
+        {
+            fpsCam.enabled = false;
+            standardCam.enabled = true;
+            standardCam.orbit.xRotation = fpsCam.rotation.x*-1;
+            standardCam.orbit.yRotation = fpsCam.rotation.y-180;
+            Cursor.visible = true;
+        }
+    }
+
     void ToggleFPSMode(bool active)
     {
-        firstPersonMode = active;
+        thirdPersonShooter = active;
     }
 }

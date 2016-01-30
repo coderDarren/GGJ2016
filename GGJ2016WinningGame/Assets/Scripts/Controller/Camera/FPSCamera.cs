@@ -15,6 +15,8 @@ public class FPSCamera : MonoBehaviour {
 	//This package uses a PlayerController. You will need to modify this based on your own controller.
 	public PlayerController controller; 
 	public float targetYOffset = 2f;
+    public float targetZOffset = 4f;
+    public float targetXOffset = 1f;
 	public bool smoothLook = true;
 	public float smoothLookTime = 20f;
 	public float XSensitivity = 200f;
@@ -23,11 +25,14 @@ public class FPSCamera : MonoBehaviour {
 	public float bounceFrequency = 2f;
 	public float bounceAmplitude = 0.7f;
 
-	Quaternion targetRotation;
-	Vector3 rotation = Vector3.zero;
+    Quaternion targetRotation;
+	public Vector3 rotation = Vector3.zero;
 	Vector2 look = Vector2.zero;
 	Vector2 bouncePosition = Vector2.zero;
-	Vector3 targetPos = Vector3.zero;
+	public Vector3 targetPos = Vector3.zero;
+    Vector3 destination;
+    float adjustmentDistance;
+    Vector3 adjustedDestination = Vector3.zero;
 
 	public bool targetVisible = true;
 
@@ -35,7 +40,7 @@ public class FPSCamera : MonoBehaviour {
 	{
 		SetCameraTarget(controller);
 		transform.position = controller.transform.position + Vector3.up*targetYOffset;
-	}
+    }
 
 	void GetInput()
 	{
@@ -55,8 +60,8 @@ public class FPSCamera : MonoBehaviour {
 
     void Update()
     {
-    	if (Input.GetKeyUp(KeyCode.Tab))
-    		Cursor.visible = !Cursor.visible;
+    	//if (Input.GetKeyUp(KeyCode.Tab))
+    		//Cursor.visible = !Cursor.visible;
 
     	GetInput();
     	if (useBounce)
@@ -65,19 +70,21 @@ public class FPSCamera : MonoBehaviour {
     		bouncePosition = Vector2.zero;
     	}
     }
-
+    Vector3 camVel;
 	void FixedUpdate()
 	{
-		targetPos = controller.transform.position + 
-							 Vector3.up*targetYOffset +
-							 Vector3.up*bouncePosition.y +
-							 transform.TransformDirection(Vector3.right * bouncePosition.x);
+        targetPos = controller.transform.position +
+                             Vector3.up * targetYOffset +
+                             Vector3.up * bouncePosition.y +
+                             transform.TransformDirection(Vector3.right * bouncePosition.x) +
+                             transform.TransformDirection(Vector3.forward * targetZOffset) + 
+                             transform.TransformDirection(Vector3.right * targetXOffset);
 
-		transform.position = Vector3.Lerp(transform.position, targetPos, 20*Time.deltaTime);
+        transform.position = Vector3.Lerp(transform.position, targetPos, 20*Time.deltaTime);
 		
 		TurnTarget();
 		LookUpDown();
-	}
+    }
 
 	void LookUpDown()
 	{

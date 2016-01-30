@@ -3,13 +3,24 @@ using System.Collections;
 
 public class PlayerAnimationController : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    PlayerController controller;
+    PlayerAnimationState animState;
+    Animator anim;
+
+    void Start()
+    {
+        controller = GetComponent<PlayerController>();
+        anim = GetComponent<Animator>();
+    }
+
+    void Update()
+    {
+        anim.SetFloat("Forward", controller.forwardInput);
+        anim.SetBool("Grounded", controller.grounded);
+        anim.SetBool("Crouch", controller.crouch);
+        anim.SetBool("Walk", controller.walk);
+        anim.SetBool("TPS", controller.thirdPersonShooter);
+        anim.SetFloat("Turn", controller.turnInput);
+    }
+
 }

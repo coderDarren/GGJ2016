@@ -23,11 +23,5 @@ public class PlayerAnimationState : MonoBehaviour {
         THROW//15
     }
     public PlayerState playerState;
-
-    int state;
-
-    void Update()
-    {
-        state = (int)playerState;
-    }
+    
 }
