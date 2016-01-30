@@ -166,7 +166,7 @@ public class PlayerController : MonoBehaviour {
         if (jumpInput > 0 && grounded)
         {
             //jump
-            if (forwardInput > 0 && !crouch)
+            if (forwardInput > 0 && !crouch && !walk)
                 velocity.y = moveSetting.jumpVel;
         }
         else if (jumpInput == 0 && grounded)
