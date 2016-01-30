@@ -21,6 +21,7 @@ public class PlayerAnimationController : MonoBehaviour {
         anim.SetBool("Walk", controller.walk);
         anim.SetBool("TPS", controller.thirdPersonShooter);
         anim.SetFloat("Turn", controller.turnInput);
+        anim.SetFloat("AbsoluteForward", Mathf.Abs(controller.forwardInput));
     }
 
 }
