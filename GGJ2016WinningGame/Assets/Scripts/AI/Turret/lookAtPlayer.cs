@@ -21,7 +21,7 @@ public class lookAtPlayer : MonoBehaviour {
 
 	void OnTriggerStay(Collider coll)
 	{
-		if (coll.tag == "Player");
+		if (coll.tag == "Player")
 		{
 			if (player.GetComponent<PlayerController>().crouch)
 			{
@@ -32,5 +32,14 @@ public class lookAtPlayer : MonoBehaviour {
 				playerSighted = true;	
 			}				
 		}
+	}
+
+	void OnTriggerExit(Collider coll)
+	{
+		if (coll.tag == "Player")
+		{
+			playerSighted = false;
+		}
+			
 	}
 }
