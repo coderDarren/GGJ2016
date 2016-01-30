@@ -4,19 +4,20 @@ using System.Collections;
 public class laserScript : MonoBehaviour {
 
 	LineRenderer laser;
-	public bool laserOn = false;
+	public bool laserOn = true;
 	public float laserTexRot = 2;
 	Renderer laserTex;
 	Light laserLight;
 
 	void Start () 
 	{
+		laserOn = true;
 		laser = gameObject.GetComponent<LineRenderer>();
-		laser.enabled = false;
+		laser.enabled = true;
 		laserTex = laser.GetComponent<Renderer>();
-		laserTex.enabled = false;
+		laserTex.enabled = true;
 		laserLight = laser.GetComponent<Light>();
-		laserLight.enabled = false;
+		laserLight.enabled = true;
 	}
 
 	void Update () 
