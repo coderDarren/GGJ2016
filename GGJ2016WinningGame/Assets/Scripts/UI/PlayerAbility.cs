@@ -71,18 +71,24 @@ public class PlayerAbility : MonoBehaviour {
         }
     }
 
+    public delegate void AbilityDelegate(string ability);
+    public static event AbilityDelegate ActivateAbility;
+
     public void AcceptAbility()
     {
         switch(ability)
         {
             case Ability.Dive:
                 PlayerData.Instance.hasDive = true;
+                ActivateAbility("dive");
                 break;
             case Ability.Punch:
                 PlayerData.Instance.hasPunch = true;
+                ActivateAbility("punch");
                 break;
             case Ability.Stars:
                 PlayerData.Instance.hasNinjaStar = true;
+                ActivateAbility("ninja");
 
                 break;
         }

@@ -64,28 +64,31 @@ public class PlayerData : MonoBehaviour {
         if (currSpeed >= maxSpeed)
             currSpeed = maxSpeed;
         
-        if (hasNinjaStar)
+        if (hasNinjaStar && currEnergy > 5)
         {
             if (Input.GetKeyDown(KeyCode.Mouse0) && !canNinja)
             {
                 Debug.Log("Throw Star");
                 canNinja = true;
+                currEnergy -= 5;
             }
         }
-        if (hasDive)
+        if (hasDive && currEnergy > 7)
         {
             if (Input.GetKeyDown(KeyCode.Mouse1) && !canDive)
             {
                 canDive = true;
                 Debug.Log("Dive");
+                currEnergy -= 7;
             }
         }
-        if (hasPunch)
+        if (hasPunch && currEnergy > 10)
         {
             if (Input.GetKeyDown(KeyCode.Mouse2) && !canPunch)
             {
                 canPunch = true;
                 Debug.Log("Punch");
+                currEnergy -= 10;
             }
         }
     }

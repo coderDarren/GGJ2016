@@ -62,7 +62,7 @@ public class ProgressBar : MonoBehaviour {
     public static void SetFill(ref Image bar, int valueMax, int valueCurr)
     {
         if (bar)
-            bar.fillAmount = ((valueCurr) / (float)valueMax);
+            bar.fillAmount = Mathf.Lerp(bar.fillAmount, ((valueCurr) / (float)valueMax), 5*Time.deltaTime);
     }
     
 }
