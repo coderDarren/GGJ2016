@@ -8,11 +8,6 @@ public class vanguardSight : MonoBehaviour {
 	public float sightDist;
 
 	public Animator animator;
-
-	// Use this for initialization
-	void Start () {
-		
-	}
 	
 	// Update is called once per frame
 	void Update () {
@@ -26,6 +21,7 @@ public class vanguardSight : MonoBehaviour {
 			{
 				if(hit.collider.gameObject.tag == "Player")
 				{
+					animator.SetBool("playerSpotted", true);
 					playerSighted = true;
 				}
 			}
@@ -33,6 +29,7 @@ public class vanguardSight : MonoBehaviour {
 			{
 				if(hit.collider.gameObject.tag == "Player")
 				{
+					animator.SetBool("playerSpotted", true);
 					playerSighted = true;
 				}
 			}
@@ -40,9 +37,14 @@ public class vanguardSight : MonoBehaviour {
 			{
 				if(hit.collider.gameObject.tag == "Player")
 				{
+					animator.SetBool("playerSpotted", true);
 					playerSighted = true;
 				}
 			}
+		}
+		if (playerSighted)
+		{
+			animator.SetBool("playerSpotted", true);
 		}
 	}
 }

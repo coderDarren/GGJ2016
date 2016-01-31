@@ -37,7 +37,7 @@ public class laserScript : MonoBehaviour {
 		laserTex.enabled = true;
 		laserLight.enabled = true;
 
-		while (laserOn = true)
+		while (laserOn)
 		{
 			laser.material.mainTextureOffset = new Vector2(0, Time.time * laserTexRot);
 			Ray ray = new Ray(transform.position, transform.forward);
