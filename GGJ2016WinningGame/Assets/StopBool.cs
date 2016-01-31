@@ -22,8 +22,8 @@ public class StopBool : StateMachineBehaviour {
             switch (boolToStop)
             {
                 case BooltoStop.Dive: PlayerData.Instance.canDive = false; break;
-                case BooltoStop.Ninja: PlayerData.Instance.hasNinjaStar = false; break;
-                case BooltoStop.Punch: PlayerData.Instance.hasPunch = false; break;
+                case BooltoStop.Ninja: PlayerData.Instance.canNinja = false; break;
+                case BooltoStop.Punch: PlayerData.Instance.canPunch = false; break;
             }
         }
     }

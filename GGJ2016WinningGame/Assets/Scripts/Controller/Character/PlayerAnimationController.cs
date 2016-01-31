@@ -23,6 +23,8 @@ public class PlayerAnimationController : MonoBehaviour {
         anim.SetFloat("Turn", controller.turnInput);
         anim.SetFloat("AbsoluteForward", Mathf.Abs(controller.forwardInput));
         anim.SetBool("Dive", PlayerData.Instance.canDive);
+        anim.SetBool("Punch", PlayerData.Instance.canPunch);
+        anim.SetBool("Ninja", PlayerData.Instance.canNinja);
     }
 
 }

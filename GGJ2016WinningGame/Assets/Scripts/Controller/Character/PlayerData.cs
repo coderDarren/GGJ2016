@@ -18,9 +18,7 @@ public class PlayerData : MonoBehaviour {
     public bool canDive = false, canNinja = false, canPunch = false;
     public int skillPoints;
 
-    public AnimationClip diveClip;
     Animator anim;
-    AnimationClipPlayable diveClipPlayable;
 
     void Awake()
     {
@@ -34,7 +32,6 @@ public class PlayerData : MonoBehaviour {
         maxHealth = 100;
         anim = GetComponent<Animator>();
 
-        diveClipPlayable = new AnimationClipPlayable(diveClip);
     }
 
     void Update()
