@@ -28,5 +28,7 @@ public class PlayerDataTextField : MonoBehaviour {
     {
         if (playerDataType == PlayerDataType.Level)
             t.text = PlayerData.Instance.level.ToString();
+        else if (playerDataType == PlayerDataType.SkillPoint)
+            t.text = "Skill Points: " + PlayerData.Instance.skillPoints.ToString();
     }
 }

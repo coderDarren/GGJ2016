@@ -13,7 +13,7 @@ public class PlayerData : MonoBehaviour {
     public int maxSpeed, currSpeed;
     public int maxStealth, currStealth;
     public int maxDamage, currDamage;
-    public bool hasNinjaStar = false, hasDive = false, hasStrangle = false;
+    public bool hasNinjaStar = false, hasDive = false, hasPunch = false;
     public int skillPoints;
 
     void Awake()
@@ -40,7 +40,7 @@ public class PlayerData : MonoBehaviour {
 
         currEnergy += energyOverTime * Time.deltaTime;
         currHealth += healthOverTime * Time.deltaTime;
-        currXP += healthOverTime * 10 * Time.deltaTime;
+        currXP += healthOverTime * 5 * Time.deltaTime;
 
         if (currEnergy >= maxEnergy)
             currEnergy = maxEnergy;
