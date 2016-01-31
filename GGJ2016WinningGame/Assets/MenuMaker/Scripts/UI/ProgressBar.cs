@@ -14,7 +14,10 @@ public class ProgressBar : MonoBehaviour {
     {
         Health,
         Xp,
-        Energy
+        Energy,
+        Speed,
+        Stealth,
+        Damage
     }
     public BarType barType;
 
@@ -40,7 +43,16 @@ public class ProgressBar : MonoBehaviour {
                 SetFill(ref bar, (int)PlayerData.Instance.maxHealth, (int)PlayerData.Instance.currHealth);
                 break;
             case BarType.Xp:
-                SetFill(ref bar, PlayerData.Instance.maxXP, PlayerData.Instance.currXP);
+                SetFill(ref bar, (int)PlayerData.Instance.maxXP, (int)PlayerData.Instance.currXP);
+                break;
+            case BarType.Speed:
+                SetFill(ref bar, (int)PlayerData.Instance.maxSpeed, (int)PlayerData.Instance.currSpeed);
+                break;
+            case BarType.Stealth:
+                SetFill(ref bar, (int)PlayerData.Instance.maxStealth, (int)PlayerData.Instance.currStealth);
+                break;
+            case BarType.Damage:
+                SetFill(ref bar, (int)PlayerData.Instance.maxDamage, (int)PlayerData.Instance.currDamage);
                 break;
         }
 
