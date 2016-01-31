@@ -16,4 +16,11 @@ public class DemonIK : MonoBehaviour {
 		anim.SetLookAtPosition(player.position);       
 		anim.SetLookAtWeight(1.0f);
 	}
+
+
+	void OnTriggerEnter(Collider o){
+		if (o.tag == "Player") {
+			anim.SetTrigger ("Roar");
+		}
+	}
 }
