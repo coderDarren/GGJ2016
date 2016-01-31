@@ -43,7 +43,7 @@ public class laserScript : MonoBehaviour {
 			Ray ray = new Ray(transform.position, transform.forward);
 			RaycastHit hit;
 			laser.SetPosition(0, ray.origin);
-			if(Physics.Raycast(ray, out hit, 100))
+			if(Physics.Raycast(ray, out hit, 15))
 			{
 				if(hit.collider.gameObject.tag == "Player")
 				{
@@ -53,7 +53,7 @@ public class laserScript : MonoBehaviour {
 			}
 			else
 			{
-				laser.SetPosition(1, ray.GetPoint(10));
+				laser.SetPosition(1, ray.GetPoint(15));
 			}
 
 			yield return null;
