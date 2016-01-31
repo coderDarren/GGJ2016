@@ -29,17 +29,11 @@ public class ForcePush : MonoBehaviour {
                 {
                     GameObject ragdoll = Instantiate(Resources.Load("Ragdoll Vanguard"), hit.transform.position,
                         Quaternion.identity) as GameObject;
+                    Instantiate(Resources.Load("Leveling Particles"), hit.transform.position,
+                        Quaternion.identity);
                     Destroy(hit.transform.gameObject);
-                    ragdoll.transform.Find("mixamorig:Hips").GetComponent<Rigidbody>().AddForce(Camera.main.transform.forward * forceAmount, ForceMode.Impulse);
-                    //ragdoll.GetComponent<Rigidbody>().AddForce(cam.transform.forward * forceAmount);
-                    //foreach(Transform t in ragdoll.transform)
-                    //{
-                    //t.position += Vector3.forward * 5;
-                    //if(t.GetComponent<Rigidbody>() != null)
-                    //{
-                    //t.GetComponent<Rigidbody>().AddForce(cam.transform.forward * forceAmount, ForceMode.Impulse);
-                    //}
-                    //}
+                    ragdoll.transform.Find("mixamorig:Hips").GetComponent<Rigidbody>().AddForce(
+                        Camera.main.transform.forward * forceAmount, ForceMode.Impulse);
                 }
             }
         }

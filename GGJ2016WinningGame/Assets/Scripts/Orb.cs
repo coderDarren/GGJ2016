@@ -47,6 +47,11 @@ public class Orb : MonoBehaviour {
             xpScript.IncrementXp();
         }
 
+        if (currentTime > lifetime)
+        {
+            Destroy(gameObject);
+        }
+
         currentTime += Time.deltaTime;
 	}
 }
