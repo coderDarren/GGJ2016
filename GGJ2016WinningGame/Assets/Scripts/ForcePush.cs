@@ -3,7 +3,6 @@ using System.Collections;
 
 public class ForcePush : MonoBehaviour {
     public ParticleSystem system;
-    public Camera cam;
     public float forceAmount;
     private ParticleSystem.EmissionModule emission;
 
@@ -22,14 +21,14 @@ public class ForcePush : MonoBehaviour {
         {
             emission.SetBursts(new ParticleSystem.Burst[] { new ParticleSystem.Burst(2.0f, 100) });
 
-            if (Physics.Raycast(transform.position, cam.transform.forward, out hit, distance))
+            if (Physics.Raycast(transform.position, Camera.main.transform.forward, out hit, distance))
             {
                 if (hit.transform.gameObject.tag == "Enemy")
                 {
                     GameObject ragdoll = Instantiate(Resources.Load("Ragdoll Vanguard"), hit.transform.position,
                         Quaternion.identity) as GameObject;
                     Destroy(hit.transform.gameObject);
-                    ragdoll.transform.Find("mixamorig:Hips").GetComponent<Rigidbody>().AddForce(cam.transform.forward * forceAmount, ForceMode.Impulse);
+                    ragdoll.transform.Find("mixamorig:Hips").GetComponent<Rigidbody>().AddForce(Camera.main.transform.forward * forceAmount, ForceMode.Impulse);
                     //ragdoll.GetComponent<Rigidbody>().AddForce(cam.transform.forward * forceAmount);
                     //foreach(Transform t in ragdoll.transform)
                     //{
