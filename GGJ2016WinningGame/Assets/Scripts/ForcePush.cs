@@ -11,6 +11,7 @@ public class ForcePush : MonoBehaviour {
     void Start () {
         //system = GetComponent<ParticleSystem>();
         emission = system.emission;
+        system.Stop();
         
     }
 	
@@ -19,7 +20,8 @@ public class ForcePush : MonoBehaviour {
         RaycastHit hit;
         if(Input.GetButtonDown("Force"))
         {
-            emission.SetBursts(new ParticleSystem.Burst[] { new ParticleSystem.Burst(2.0f, 100) });
+            emission.SetBursts(new ParticleSystem.Burst[] { new ParticleSystem.Burst(0.5f, 100) });
+            system.Play();
 
             if (Physics.Raycast(transform.position, Camera.main.transform.forward, out hit, distance))
             {
