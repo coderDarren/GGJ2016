@@ -22,6 +22,7 @@ public class PlayerAnimationController : MonoBehaviour {
         anim.SetBool("TPS", controller.thirdPersonShooter);
         anim.SetFloat("Turn", controller.turnInput);
         anim.SetFloat("AbsoluteForward", Mathf.Abs(controller.forwardInput));
+        anim.SetBool("Dive", PlayerData.Instance.canDive);
     }
 
 }

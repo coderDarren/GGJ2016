@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Experimental.Director;
 
 public class PlayerData : MonoBehaviour {
 
@@ -14,7 +15,12 @@ public class PlayerData : MonoBehaviour {
     public int maxStealth, currStealth;
     public int maxDamage, currDamage;
     public bool hasNinjaStar = false, hasDive = false, hasPunch = false;
+    public bool canDive = false, canNinja = false, canPunch = false;
     public int skillPoints;
+
+    public AnimationClip diveClip;
+    Animator anim;
+    AnimationClipPlayable diveClipPlayable;
 
     void Awake()
     {
@@ -26,6 +32,9 @@ public class PlayerData : MonoBehaviour {
         maxXP = 100;
         maxEnergy = 100;
         maxHealth = 100;
+        anim = GetComponent<Animator>();
+
+        diveClipPlayable = new AnimationClipPlayable(diveClip);
     }
 
     void Update()
@@ -57,7 +66,31 @@ public class PlayerData : MonoBehaviour {
             currStealth = maxStealth;
         if (currSpeed >= maxSpeed)
             currSpeed = maxSpeed;
-
+        
+        if (hasNinjaStar)
+        {
+            if (Input.GetKeyDown(KeyCode.Mouse0) && !canNinja)
+            {
+                Debug.Log("Throw Star");
+                canNinja = true;
+            }
+        }
+        if (hasDive)
+        {
+            if (Input.GetKeyDown(KeyCode.Mouse1) && !canDive)
+            {
+                canDive = true;
+                Debug.Log("Dive");
+            }
+        }
+        if (hasPunch)
+        {
+            if (Input.GetKeyDown(KeyCode.Mouse2) && !canPunch)
+            {
+                canPunch = true;
+                Debug.Log("Punch");
+            }
+        }
     }
 
 }
