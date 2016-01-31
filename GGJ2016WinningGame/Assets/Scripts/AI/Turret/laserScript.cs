@@ -4,19 +4,22 @@ using System.Collections;
 public class laserScript : MonoBehaviour {
 
 	LineRenderer laser;
-	public bool laserOn = false;
+	public bool laserOn = true;
 	public float laserTexRot = 2;
 	Renderer laserTex;
 	Light laserLight;
+	lookAtPlayer lap;
 
 	void Start () 
 	{
+		laserOn = true;
 		laser = gameObject.GetComponent<LineRenderer>();
-		laser.enabled = false;
+		laser.enabled = true;
 		laserTex = laser.GetComponent<Renderer>();
-		laserTex.enabled = false;
+		laserTex.enabled = true;
 		laserLight = laser.GetComponent<Light>();
-		laserLight.enabled = false;
+		laserLight.enabled = true;
+		lap = GetComponentInParent<lookAtPlayer>();
 	}
 
 	void Update () 
@@ -40,13 +43,17 @@ public class laserScript : MonoBehaviour {
 			Ray ray = new Ray(transform.position, transform.forward);
 			RaycastHit hit;
 			laser.SetPosition(0, ray.origin);
-			if(Physics.Raycast(ray, out hit, 100))
+			if(Physics.Raycast(ray, out hit, 15))
 			{
+				if(hit.collider.gameObject.tag == "Player")
+				{
+					lap.playerSighted = true;
+				}
 				laser.SetPosition(1, hit.point);
 			}
 			else
 			{
-				laser.SetPosition(1, ray.GetPoint(100));
+				laser.SetPosition(1, ray.GetPoint(15));
 			}
 
 			yield return null;

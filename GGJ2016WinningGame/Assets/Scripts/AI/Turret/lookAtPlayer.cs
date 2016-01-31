@@ -4,7 +4,9 @@ using System.Collections;
 public class lookAtPlayer : MonoBehaviour {
 
 	public bool playerSighted;
+	public float playerHeightAdjustment;
 	public GameObject player;
+	public float rotationsPerMinute;
 
 	// Use this for initialization
 	void Start () {
@@ -13,9 +15,13 @@ public class lookAtPlayer : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (playerSighted)
+		if (!playerSighted)
 		{
-			transform.LookAt(player.transform);
+			transform.Rotate (0, 6.0f * rotationsPerMinute * Time.deltaTime, 0);
+		}
+		else
+		{
+			transform.LookAt(new Vector3(player.transform.localPosition.x, player.transform.localPosition.y + playerHeightAdjustment, player.transform.localPosition.z));
 		}
 	}
 
