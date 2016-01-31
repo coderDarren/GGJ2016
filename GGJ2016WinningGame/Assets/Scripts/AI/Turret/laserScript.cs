@@ -8,6 +8,7 @@ public class laserScript : MonoBehaviour {
 	public float laserTexRot = 2;
 	Renderer laserTex;
 	Light laserLight;
+	lookAtPlayer lap;
 
 	void Start () 
 	{
@@ -18,6 +19,7 @@ public class laserScript : MonoBehaviour {
 		laserTex.enabled = true;
 		laserLight = laser.GetComponent<Light>();
 		laserLight.enabled = true;
+		lap = GetComponentInParent<lookAtPlayer>();
 	}
 
 	void Update () 
@@ -43,11 +45,15 @@ public class laserScript : MonoBehaviour {
 			laser.SetPosition(0, ray.origin);
 			if(Physics.Raycast(ray, out hit, 100))
 			{
+				if(hit.collider.gameObject.tag == "Player")
+				{
+					lap.playerSighted = true;
+				}
 				laser.SetPosition(1, hit.point);
 			}
 			else
 			{
-				laser.SetPosition(1, ray.GetPoint(100));
+				laser.SetPosition(1, ray.GetPoint(10));
 			}
 
 			yield return null;
