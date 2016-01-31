@@ -29,8 +29,6 @@ public class ForcePush : MonoBehaviour {
                 {
                     GameObject ragdoll = Instantiate(Resources.Load("Ragdoll Vanguard"), hit.transform.position,
                         Quaternion.identity) as GameObject;
-                    Instantiate(Resources.Load("Leveling Particles"), hit.transform.position,
-                        Quaternion.identity);
                     Destroy(hit.transform.gameObject);
                     ragdoll.transform.Find("mixamorig:Hips").GetComponent<Rigidbody>().AddForce(
                         Camera.main.transform.forward * forceAmount, ForceMode.Impulse);

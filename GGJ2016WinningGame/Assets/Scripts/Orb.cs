@@ -4,7 +4,7 @@ using System.Collections;
 public class Orb : MonoBehaviour {
     
     private ParticleSystem system;
-    public GameObject player;
+    private GameObject player;
     public float wait;
     public float speed;
     public float lifetime;
@@ -18,6 +18,7 @@ public class Orb : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        player = GameObject.FindGameObjectWithTag("Player");
         currentTime = 0.0f;
         gainXp = false;
         system = GetComponent<ParticleSystem>();
@@ -34,10 +35,10 @@ public class Orb : MonoBehaviour {
             int liveParticles = system.GetParticles(particles);
             for(int i = 0; i < liveParticles; i++)
             {
-                particles[i].position = Vector3.MoveTowards(particles[i].position, 
-                    player.transform.position, speed * Time.deltaTime);
+                particles[i].position = Vector3.Lerp(particles[i].position, 
+                player.transform.position, speed * Time.deltaTime);
             }
-
+            Debug.Log(player.transform);
             system.SetParticles(particles, liveParticles);
         }
 

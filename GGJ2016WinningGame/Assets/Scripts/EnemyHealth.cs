@@ -19,8 +19,6 @@ public class EnemyHealth : MonoBehaviour {
 		if (curHealth <= 0) {
 			GameObject ragdoll = Instantiate(Resources.Load("Ragdoll Vanguard"), transform.position,
 				Quaternion.identity) as GameObject;
-            Instantiate(Resources.Load("Leveling Particles"), transform.position,
-                        Quaternion.identity);
             ragdoll.transform.Find("mixamorig:Hips").GetComponent<Rigidbody>().AddForce(Vector3.up * explosionRagdollForce, ForceMode.Impulse);
 			Instantiate (explosion);
 
