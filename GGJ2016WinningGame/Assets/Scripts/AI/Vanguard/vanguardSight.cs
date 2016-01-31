@@ -4,6 +4,10 @@ using System.Collections;
 public class vanguardSight : MonoBehaviour {
 
 	public bool playerSighted;
+	public float heightMultiplier;
+	public float sightDist;
+
+	public Animator animator;
 
 	// Use this for initialization
 	void Start () {
@@ -14,9 +18,25 @@ public class vanguardSight : MonoBehaviour {
 	void Update () {
 		if(!playerSighted)
 		{					
-			Ray ray = new Ray(transform.position, transform.forward);
+			Debug.DrawRay(transform.position + Vector3.up * heightMultiplier, transform.forward * sightDist, Color.green);
+			Debug.DrawRay(transform.position + Vector3.up * heightMultiplier, (transform.forward + transform.right) * sightDist, Color.green);
+			Debug.DrawRay(transform.position + Vector3.up * heightMultiplier, (transform.forward - transform.right) * sightDist, Color.green);
 			RaycastHit hit;
-			if(Physics.Raycast(ray, out hit, 15))
+			if(Physics.Raycast(transform.position + Vector3.up * heightMultiplier, transform.forward, out hit, sightDist))				
+			{
+				if(hit.collider.gameObject.tag == "Player")
+				{
+					playerSighted = true;
+				}
+			}
+			if(Physics.Raycast(transform.position + Vector3.up * heightMultiplier, (transform.forward + transform.right), out hit, sightDist))				
+			{
+				if(hit.collider.gameObject.tag == "Player")
+				{
+					playerSighted = true;
+				}
+			}
+			if(Physics.Raycast(transform.position + Vector3.up * heightMultiplier, (transform.forward - transform.right), out hit, sightDist))				
 			{
 				if(hit.collider.gameObject.tag == "Player")
 				{
